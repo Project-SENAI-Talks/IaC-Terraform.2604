@@ -39,7 +39,7 @@ resource "aws_iam_role_policy_attachment" "app-runner-ecr-access" {
 }
 
 resource "aws_apprunner_service" "app-runner" {
-  service_name = "example"
+  service_name = "${var.app_name}"
 
   source_configuration {
     authentication_configuration {
@@ -47,7 +47,7 @@ resource "aws_apprunner_service" "app-runner" {
     }
     image_repository {
       image_configuration {
-        port = "8000"
+        port = "8080"
       }
       image_identifier      = "861833468094.dkr.ecr.us-east-1.amazonaws.com/${var.app_name}-repo:latest"
       image_repository_type = "ECR"
@@ -55,7 +55,4 @@ resource "aws_apprunner_service" "app-runner" {
     auto_deployments_enabled = false
   }
 
-  tags = {
-    Name = "example-apprunner-service"
-  }
 }
